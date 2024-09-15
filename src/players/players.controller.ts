@@ -14,19 +14,14 @@ import {
 } from '@nestjs/microservices';
 import { CreatePlayerDto } from './dtos/create-player.dto';
 import { Observable } from 'rxjs';
+import { ClientProxySmartRanking } from 'src/proxy/client-proxy';
 
 @Controller('api/v1/players')
 export class PlayersController {
-  private clientAdminBackend: ClientProxy;
-  constructor() {
-    this.clientAdminBackend = ClientProxyFactory.create({
-      transport: Transport.RMQ,
-      options: {
-        urls: ['amqp://renan:naner994@18.217.224.224:5672/smartranking'],
-        queue: 'admin-backend',
-      },
-    });
-  }
+  private clientAdminBackend =
+    this.clientProxySmartRanking.getClientProxyAdminBackendInstance();
+
+  constructor(private clientProxySmartRanking: ClientProxySmartRanking) {}
 
   @Post()
   @UsePipes(ValidationPipe)
