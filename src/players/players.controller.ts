@@ -7,11 +7,6 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 
-import {
-  ClientProxy,
-  ClientProxyFactory,
-  Transport,
-} from '@nestjs/microservices';
 import { CreatePlayerDto } from './dtos/create-player.dto';
 import { Observable } from 'rxjs';
 import { ClientProxySmartRanking } from 'src/proxy/client-proxy';
