@@ -1,26 +1,16 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { ClientProxySmartRanking } from 'src/proxy/client-proxy';
+import { RankingsService } from './rankings.service';
 
 @Controller('api/v1/rankings')
 export class RankingsController {
-  private clientRankingProxy =
-    this.clientProxySmartRanking.getClientProxyRankingInstance();
-
-  constructor(private clientProxySmartRanking: ClientProxySmartRanking) {}
+  constructor(private rankingService: RankingsService) {}
 
   @Get()
   getRankings(
     @Query('category') category: string,
     @Query('dateRef') dateRef: string,
   ): Observable<any> {
-    if (!category) {
-      throw new Error('Category is required');
-    }
-
-    return this.clientRankingProxy.send('get-ranking', {
-      category,
-      dateRef: dateRef || null,
-    });
+    return this.rankingService.getRankings(category, dateRef);
   }
 }

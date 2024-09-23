@@ -9,24 +9,20 @@ import {
 
 import { CreatePlayerDto } from './dtos/create-player.dto';
 import { Observable } from 'rxjs';
-import { ClientProxySmartRanking } from 'src/proxy/client-proxy';
+import { PlayersService } from './players.service';
 
 @Controller('api/v1/players')
 export class PlayersController {
-  private clientAdminBackend =
-    this.clientProxySmartRanking.getClientProxyAdminBackendInstance();
-
-  constructor(private clientProxySmartRanking: ClientProxySmartRanking) {}
+  constructor(private playerService: PlayersService) {}
 
   @Post()
   @UsePipes(ValidationPipe)
   async createPlayer(@Body() body: CreatePlayerDto) {
-    this.clientAdminBackend.emit('create-player', body);
+    this.playerService.createPlayer(body);
   }
 
   @Get()
   getAllPlayers(): Observable<any> {
-    console.log('getAllPlayers');
-    return this.clientAdminBackend.send('get-players', {});
+    return this.playerService.getAllPlayers();
   }
 }

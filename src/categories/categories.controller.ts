@@ -2,7 +2,6 @@ import {
   Body,
   Controller,
   Get,
-  Logger,
   Param,
   Post,
   Put,
@@ -14,35 +13,26 @@ import {
 import { CreateCategoryDto } from './dtos/create.categories.dto';
 import { Observable } from 'rxjs';
 import { UpdateCategories } from './dtos/update.categories.dto';
-import { ClientProxySmartRanking } from '../proxy/client-proxy';
+import { CategoriesService } from './categories.service';
 
 @Controller('api/v1')
 export class CategoriesController {
-  private logger = new Logger(CategoriesController.name);
-
-  constructor(private clientProxySmartRanking: ClientProxySmartRanking) {}
-
-  private clientAdminBackend =
-    this.clientProxySmartRanking.getClientProxyAdminBackendInstance();
+  constructor(private categoriesService: CategoriesService) {}
 
   @Post('categories')
   @UsePipes(ValidationPipe)
   async createCategories(@Body() req: CreateCategoryDto) {
-    this.clientAdminBackend.emit('create-category', req);
+    this.categoriesService.createCategories(req);
   }
 
   @Get('categories')
   getAllCategories(@Query('category') id: string): Observable<any> {
-    return this.clientAdminBackend.send('get-categories', id || '');
+    return this.categoriesService.getAllCategories(id);
   }
 
   @Put('categories/:id')
   @UsePipes(ValidationPipe)
   async update(@Param('id') id: string, @Body() category: UpdateCategories) {
-    console.log('update');
-    return this.clientAdminBackend.emit('update-category', {
-      id,
-      category,
-    });
+    return this.categoriesService.updateCategory(id, category);
   }
 }
