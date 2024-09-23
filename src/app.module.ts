@@ -6,6 +6,7 @@ import { ChallengesModule } from './challenges/challenges.module';
 import { ProxyRMQModule } from './proxy/proxy.module';
 import { ConfigModule } from '@nestjs/config';
 import { ClientProxySmartRanking } from './proxy/client-proxy';
+import { RankingsModule } from './rankings/rankings.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { ClientProxySmartRanking } from './proxy/client-proxy';
     ChallengesModule,
     ProxyRMQModule,
     ConfigModule.forRoot({ isGlobal: true }),
+    RankingsModule,
   ],
   controllers: [],
   providers: [ClientProxySmartRanking],
