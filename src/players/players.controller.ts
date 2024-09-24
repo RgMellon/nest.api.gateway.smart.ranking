@@ -8,7 +8,6 @@ import {
 } from '@nestjs/common';
 
 import { CreatePlayerDto } from './dtos/create-player.dto';
-import { Observable } from 'rxjs';
 import { PlayersService } from './players.service';
 
 @Controller('api/v1/players')
@@ -22,7 +21,7 @@ export class PlayersController {
   }
 
   @Get()
-  getAllPlayers(): Observable<any> {
-    return this.playerService.getAllPlayers();
+  async getAllPlayers(): Promise<any> {
+    return await this.playerService.getAllPlayers();
   }
 }

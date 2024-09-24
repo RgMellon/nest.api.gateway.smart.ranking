@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 
 import { CreateCategoryDto } from './dtos/create.categories.dto';
-import { Observable } from 'rxjs';
+
 import { UpdateCategories } from './dtos/update.categories.dto';
 import { CategoriesService } from './categories.service';
 
@@ -26,8 +26,8 @@ export class CategoriesController {
   }
 
   @Get('categories')
-  getAllCategories(@Query('category') id: string): Observable<any> {
-    return this.categoriesService.getAllCategories(id);
+  async getAllCategories(@Query('category') id: string): Promise<any> {
+    return await this.categoriesService.getAllCategories(id);
   }
 
   @Put('categories/:id')

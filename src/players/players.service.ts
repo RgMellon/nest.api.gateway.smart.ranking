@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ClientProxySmartRanking } from 'src/proxy/client-proxy';
 import { CreatePlayerDto } from './dtos/create-player.dto';
-import { Observable } from 'rxjs';
 
 @Injectable()
 export class PlayersService {
@@ -14,7 +13,7 @@ export class PlayersService {
     this.clientAdminBackend.emit('create-player', body);
   }
 
-  getAllPlayers(): Observable<any> {
-    return this.clientAdminBackend.send('get-players', {});
+  async getAllPlayers(): Promise<any> {
+    return await this.clientAdminBackend.send('get-players', {}).toPromise();
   }
 }

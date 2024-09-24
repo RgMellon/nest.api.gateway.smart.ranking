@@ -1,7 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ClientProxySmartRanking } from 'src/proxy/client-proxy';
 import { CreateCategoryDto } from './dtos/create.categories.dto';
-import { Observable } from 'rxjs';
 import { UpdateCategories } from './dtos/update.categories.dto';
 
 @Injectable()
@@ -18,9 +17,9 @@ export class CategoriesService {
     this.clientAdminBackend.emit('create-category', payload);
   }
 
-  getAllCategories(id?: string): Observable<any> {
+  getAllCategories(id?: string): Promise<any> {
     this.logger.log(`Recebendo chamada para buscar categorias ${id}`);
-    return this.clientAdminBackend.send('get-categories', id || '');
+    return this.clientAdminBackend.send('get-categories', id || '').toPromise();
   }
 
   updateCategory(id: string, category: UpdateCategories) {
