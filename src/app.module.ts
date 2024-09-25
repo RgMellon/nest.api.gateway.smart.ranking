@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-// import { AppController } from './app.controller';
 import { PlayersModule } from './players/players.module';
 import { CategoriesModule } from './categories/categories.module';
 import { ChallengesModule } from './challenges/challenges.module';
@@ -7,6 +6,7 @@ import { ProxyRMQModule } from './proxy/proxy.module';
 import { ConfigModule } from '@nestjs/config';
 import { ClientProxySmartRanking } from './proxy/client-proxy';
 import { RankingsModule } from './rankings/rankings.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -16,6 +16,7 @@ import { RankingsModule } from './rankings/rankings.module';
     ProxyRMQModule,
     ConfigModule.forRoot({ isGlobal: true }),
     RankingsModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [ClientProxySmartRanking],
